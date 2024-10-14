@@ -62,7 +62,7 @@ void APacManPlayer::Tick(float DeltaTime)
     // Move Pac-Man continuously in the current direction
     if (!CurrentDirection.IsZero())
     {
-        FVector Movement = CurrentDirection * DeltaTime * 100.0f;
+       FVector Movement = CurrentDirection * DeltaTime * 100.0f;
         MovementComponent->AddInputVector(Movement);
     }
 }

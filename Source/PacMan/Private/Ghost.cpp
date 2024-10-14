@@ -1,51 +1,65 @@
 #include "Ghost.h"
+#include "BehaviorTree/BehaviorTreeComponent.h"
+#include "AIController.h"
 
 // Constructor
 AGhost::AGhost()
 {
+    // Initialize state flags
     bIsDead = false;
     bIsFrightened = false;
 }
 
-// Called when the game starts
 void AGhost::BeginPlay()
 {
     Super::BeginPlay();
-    // Initialize ghost state
+
+    // Setup AI controller and run behavior tree
+    AAIController* AIController = Cast<AAIController>(GetController());
+    if (AIController && TreeAsset)
+    {
+        AIController->RunBehaviorTree(TreeAsset);
+    }
 }
 
-// Handle overlap with Pac-Man or other entities
+// Overlap event to handle interactions with Pac-Man or other entities
 void AGhost::OnOverlap()
 {
-    // Logic for handling overlaps with Pac-Man
     if (bIsFrightened)
     {
         SetDeadMode();
     }
     else
     {
-        // Logic when not frightened (possibly chasing Pac-Man)
-        UE_LOG(LogTemp, Warning, TEXT("Ghost has overlapped with Pac-Man!"));
+        // Logic for interaction with Pac-Man when not frightened
+        // E.g., Pac-Man loses a life if ghost is not dead and not frightened
     }
 }
 
-// Set ghost to alive mode
+// Set the ghost to "Alive" mode (chasing)
 void AGhost::SetAliveMode()
 {
     bIsDead = false;
-    UE_LOG(LogTemp, Warning, TEXT("Ghost is alive."));
+    bIsFrightened = false;
+
+    // Here you might want to set AI behavior to chase Pac-Man
+    // Example: Run a different part of the behavior tree
 }
 
-// Set ghost to dead mode
+// Set the ghost to "Dead" mode (returning to base)
 void AGhost::SetDeadMode()
 {
     bIsDead = true;
-    UE_LOG(LogTemp, Warning, TEXT("Ghost is dead."));
+
+    // Possibly stop the current behavior tree and run one where the ghost returns to spawn
+    // Example: AI logic to navigate back to a safe zone
 }
 
-// Set ghost to frightened mode
+// Set the ghost to "Frightened" mode (running away)
 void AGhost::SetFrightenMode()
 {
     bIsFrightened = true;
-    UE_LOG(LogTemp, Warning, TEXT("Ghost is frightened."));
+
+    // Adjust the AI behavior, possibly start running away from Pac-Man
+    // Example: You could trigger a behavior that finds random locations
 }

@@ -20,8 +20,12 @@ public:
     void OnOverlap();
 
     void SetAliveMode();
+
     void SetDeadMode();
     void SetFrightenMode();
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
+    class UBehaviorTree* TreeAsset;
 
 protected:
 
@@ -31,8 +35,4 @@ protected:
 
     UPROPERTY(EditAnywhere)
     bool bIsFrightened;
-
-    // Tree asset reference
-    UPROPERTY(EditAnywhere)
-    TSubclassOf<class AActor> TreeAsset; // Reference to a tree actor
 };
