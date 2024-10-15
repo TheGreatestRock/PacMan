@@ -1,8 +1,8 @@
 #pragma once
 
-#include "CoreMinimal.h"
 #include "AIController.h"
-#include "BehaviorTree/BehaviorTreeComponent.h" // Ajout de l'inclusion manquante
+#include "BehaviorTree/BehaviorTree.h"
+#include "BehaviorTree/BlackboardData.h" // Include this header
 #include "GhostAIController.generated.h"
 
 UCLASS()
@@ -13,17 +13,19 @@ class PACMAN_API AGhostAIController : public AAIController
 public:
     AGhostAIController();
 
-protected:
     virtual void OnPossess(APawn* InPawn) override;
 
-private:
-    UPROPERTY(Transient)
-    UBehaviorTreeComponent* BehaviorComp;
+protected:
+    UPROPERTY(EditDefaultsOnly, Category = "AI")
+    UBehaviorTree* BehaviorTreeAsset; // Reference to the Behavior Tree asset
 
-    UPROPERTY(Transient)
+    UPROPERTY(EditDefaultsOnly, Category = "AI")
+    UBlackboardData* BlackboardAsset; // Reference to the Blackboard asset
+
+    UBehaviorTreeComponent* BehaviorComp;
     UBlackboardComponent* BlackboardComp;
 
-    // For convenience: Blackboard key selectors
+    // Blackboard keys
     FName TargetLocationKey;
     FName IsDeadKey;
     FName IsFrightenedKey;

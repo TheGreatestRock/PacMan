@@ -1,6 +1,8 @@
 #include "Ghost.h"
+#include "GhostAIController.h"
 #include "BehaviorTree/BehaviorTreeComponent.h"
-#include "AIController.h"
+#include "BehaviorTree/BlackboardComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 // Constructor
 AGhost::AGhost()
@@ -10,15 +12,28 @@ AGhost::AGhost()
     bIsFrightened = false;
 }
 
+// Called when the game starts or when spawned
 void AGhost::BeginPlay()
 {
     Super::BeginPlay();
 
-    // Setup AI controller and run behavior tree
-    AAIController* AIController = Cast<AAIController>(GetController());
+    UpdateBlackboardStates();
+
+    // Setup AI controller and run the behavior tree
+    AGhostAIController* AIController = Cast<AGhostAIController>(GetController());
     if (AIController && TreeAsset)
     {
-        AIController->RunBehaviorTree(TreeAsset);
+        // Initialize the blackboard with the TreeAsset
+        if (UBlackboardComponent* BlackboardComp = AIController->GetBlackboardComponent())
+        {
+            // Set initial values in the blackboard
+            BlackboardComp->SetValueAsBool(TEXT("IsDead"), bIsDead);
+            BlackboardComp->SetValueAsBool(TEXT("IsFrightened"), bIsFrightened);
+            BlackboardComp->SetValueAsVector(TEXT("TargetLocation"), GetActorLocation()); // Set initial target location
+
+            // Run the behavior tree
+            AIController->RunBehaviorTree(TreeAsset);
+        }
     }
 }
 
@@ -27,23 +42,20 @@ void AGhost::OnOverlap()
 {
     if (bIsFrightened)
     {
-        SetDeadMode();
+        SetDeadMode();  // Ghost dies if frightened and overlaps with Pac-Man
     }
     else
     {
         // Logic for interaction with Pac-Man when not frightened
-        // E.g., Pac-Man loses a life if ghost is not dead and not frightened
     }
 }
 
-// Set the ghost to "Alive" mode (chasing)
 void AGhost::SetAliveMode()
 {
     bIsDead = false;
     bIsFrightened = false;
 
-    // Here you might want to set AI behavior to chase Pac-Man
-    // Example: Run a different part of the behavior tree
+    UpdateBlackboardStates();
 }
 
 // Set the ghost to "Dead" mode (returning to base)
@@ -51,8 +63,7 @@ void AGhost::SetDeadMode()
 {
     bIsDead = true;
 
-    // Possibly stop the current behavior tree and run one where the ghost returns to spawn
-    // Example: AI logic to navigate back to a safe zone
+    UpdateBlackboardStates();
 }
 
 // Set the ghost to "Frightened" mode (running away)
@@ -60,6 +71,24 @@ void AGhost::SetFrightenMode()
 {
     bIsFrightened = true;
 
-    // Adjust the AI behavior, possibly start running away from Pac-Man
-    // Example: You could trigger a behavior that finds random locations
+    // Sync with Blackboard
+    UpdateBlackboardStates();
+}
+
+void AGhost::UpdateBlackboardStates()
+{
+    if (AGhostAIController* AIController = GetGhostAIController())
+    {
+        if (UBlackboardComponent* BlackboardComp = AIController->GetBlackboardComponent())
+        {
+            BlackboardComp->SetValueAsBool(TEXT("IsDead"), bIsDead);
+            BlackboardComp->SetValueAsBool(TEXT("IsFrightened"), bIsFrightened);
+        }
+    }
+}
+
+// Function to get the AI controller for this ghost
+AGhostAIController* AGhost::GetGhostAIController() const
+{
+    return Cast<AGhostAIController>(GetController());
 }

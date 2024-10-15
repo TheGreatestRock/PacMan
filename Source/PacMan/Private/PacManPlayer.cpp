@@ -11,9 +11,6 @@ APacManPlayer::APacManPlayer()
     // Enable tick so Pac-Man can respond to input every frame
     PrimaryActorTick.bCanEverTick = true;
 
-    // Add a Pawn Movement Component to handle movement
-    MovementComponent = CreateDefaultSubobject<UFloatingPawnMovement>(TEXT("MovementComponent"));
-
     // Initialize the current movement direction to zero (stationary)
     CurrentDirection = FVector::ZeroVector;
 }
