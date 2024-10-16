@@ -8,6 +8,7 @@ APacEntity::APacEntity()
 {
     // Create movement component
     MovementComponent = CreateDefaultSubobject<UFloatingPawnMovement>(TEXT("MovementComponent"));
+	MovementComponent->MaxSpeed = 80.0f; // Set max speed
 
     // Create a collision box
     CollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("CollisionBox"));

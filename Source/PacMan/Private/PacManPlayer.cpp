@@ -7,7 +7,7 @@
 APacManPlayer::APacManPlayer()
 {
     // Set default movement speed
-    MovementSpeed = 200.0f;
+    MovementSpeed = 100.0f;
 
     // Enable tick so Pac-Man can respond to input every frame
     PrimaryActorTick.bCanEverTick = true;
@@ -38,7 +38,7 @@ void APacManPlayer::MoveUp(float Value)
     if (Value != 0.0f)
     {
         // Set movement direction based on input (Y-axis)
-        CurrentDirection = FVector((Value > 0 ? 1 : -1) * MovementSpeed, 0.0f, 0.0f);
+        CurrentDirection = FVector(0.0f, (Value > 0 ? -1 : 1) * MovementSpeed, 0.0f);
     }
 }
 
@@ -48,7 +48,7 @@ void APacManPlayer::MoveRight(float Value)
     if (Value != 0.0f)
     {
         // Set movement direction based on input (X-axis)
-        CurrentDirection = FVector(0.0f, (Value > 0 ? 1 : -1) * MovementSpeed, 0.0f);
+        CurrentDirection = FVector((Value > 0 ? 1 : -1) * MovementSpeed, 0.0f, 0.0f);
     }
 }
 
