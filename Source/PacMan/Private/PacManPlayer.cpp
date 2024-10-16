@@ -7,7 +7,7 @@
 APacManPlayer::APacManPlayer()
 {
     // Set default movement speed
-    MovementSpeed = 100.0f;
+    MovementSpeed = 200.0f;
 
     // Enable tick so Pac-Man can respond to input every frame
     PrimaryActorTick.bCanEverTick = true;
