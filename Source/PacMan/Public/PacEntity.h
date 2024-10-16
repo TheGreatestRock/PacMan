@@ -17,23 +17,16 @@ protected:
     virtual void BeginPlay() override;
 
 public:
-    // Method to setup player input component
+    // Called to bind functionality to input
     virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-    // Collision overlap event
-    UFUNCTION()
-    void OnOverlapBegin(class UPrimitiveComponent* OverlappedComponent,
-        class AActor* OtherActor,
-        class UPrimitiveComponent* OtherComp,
-        FVector NormalImpulse,
-        const FHitResult& Hit);
-
-    //movement component
-	UPROPERTY(VisibleAnywhere)
-	class UFloatingPawnMovement* MovementComponent;
 
 protected:
-    // Collision Box
+    // Collision box component
     UPROPERTY(VisibleAnywhere)
     class UBoxComponent* CollisionBox;
+
+    // Movement component
+    UPROPERTY(VisibleAnywhere)
+    class UFloatingPawnMovement* MovementComponent;
 };

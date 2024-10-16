@@ -23,7 +23,8 @@ public:
     void MoveUp(float Value);
     void MoveRight(float Value);
 
-    void Tick(float DeltaTime);
+    // Called every frame
+    virtual void Tick(float DeltaTime) override;
 
 protected:
     // Score property

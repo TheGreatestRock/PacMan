@@ -1,6 +1,7 @@
 #include "PacManPlayer.h"
 #include "GameFramework/FloatingPawnMovement.h"
 #include "Components/InputComponent.h"
+#include "Ghost.h"
 
 // Constructor
 APacManPlayer::APacManPlayer()
@@ -26,7 +27,7 @@ void APacManPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 {
     Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-    // Bind movement to axis input (setup these axis in the Project Settings -> Input)
+    // Bind movement to axis input (setup these axes in the Project Settings -> Input)
     PlayerInputComponent->BindAxis("MoveUp", this, &APacManPlayer::MoveUp);
     PlayerInputComponent->BindAxis("MoveRight", this, &APacManPlayer::MoveRight);
 }
@@ -59,7 +60,8 @@ void APacManPlayer::Tick(float DeltaTime)
     // Move Pac-Man continuously in the current direction
     if (!CurrentDirection.IsZero())
     {
-       FVector Movement = CurrentDirection * DeltaTime * 100.0f;
+        FVector Movement = CurrentDirection * DeltaTime;
         MovementComponent->AddInputVector(Movement);
     }
 }
+
