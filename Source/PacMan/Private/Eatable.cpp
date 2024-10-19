@@ -3,7 +3,7 @@
 
 #include "Eatable.h"
 #include "Components/BoxComponent.h"
-//#include "PacManPlayer.h"
+#include "PacManPlayer.h"
 
 // Sets default values
 AEatable::AEatable()
@@ -34,16 +34,16 @@ void AEatable::BeginPlay()
 void AEatable::OnEat(AActor* MyActor, AActor* OtherActor)
 {
     GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Miam"));
-    //if (OtherActor && OtherActor->IsA(APacManPlayer::StaticClass()))
-    //{
-    //    // Destroy the FallingBonus
-    //    MyActor->Destroy();
+    if (OtherActor && OtherActor->IsA(APacManPlayer::StaticClass()))
+    {
+        // Destroy the FallingBonus
+        MyActor->Destroy();
 
-    //    // Increment the bonus counter
-    //    Score++;
+        // Increment the bonus counter
+        //Score++;
 
-    //}
-    MyActor->Destroy();
+    }
+    /*MyActor->Destroy();*/
 }
 
 void AEatable::OnOverlap(AActor* MyActor, AActor* OtherActor)
