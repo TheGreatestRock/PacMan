@@ -29,10 +29,12 @@ public:
 
     FVector GetPositionInFront(float Distance) const;
 
-protected:
     // Score property
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
     int32 Score;
+
+protected:
+
 
     FVector CurrentDirection;
 
