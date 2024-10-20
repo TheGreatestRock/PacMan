@@ -14,6 +14,8 @@ APacManPlayer::APacManPlayer()
 
     // Initialize the current movement direction to zero (stationary)
     CurrentDirection = FVector::ZeroVector;
+
+    Score = 0;
 }
 
 // Called when the game starts
@@ -50,6 +52,11 @@ void APacManPlayer::MoveRight(float Value)
         // Set movement direction based on input (X-axis)
         CurrentDirection = FVector((Value > 0 ? 1 : -1) * MovementSpeed, 0.0f, 0.0f);
     }
+}
+
+void APacManPlayer::AddScore(int32 Value)
+{
+    Score += Value;
 }
 
 // Called every frame
