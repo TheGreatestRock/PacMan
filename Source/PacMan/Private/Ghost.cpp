@@ -64,7 +64,7 @@ void AGhost::SetAliveMode()
 void AGhost::SetDeadMode()  
 {  
    bIsDead = true;  
-
+   bIsFrightened = false;
    UpdateBlackboardStates();  
 } 
 
