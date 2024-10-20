@@ -32,6 +32,9 @@ public:
     UFUNCTION(BlueprintCallable, Category = "AI")
     void SetDeadMode();
 
+    UFUNCTION(BlueprintCallable, Category = "AI")
+    void SetUnFrightened();
+
     // Set the ghost to "Frightened" mode (running away)
     UFUNCTION(BlueprintCallable, Category = "AI")
     void SetFrightenMode();
@@ -54,4 +57,6 @@ protected:
 
     // Function to get the AI controller for this ghost
     AGhostAIController* GetGhostAIController() const;
+
+    FTimerHandle FrightenedTimerHandle;
 };
