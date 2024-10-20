@@ -22,9 +22,12 @@ public:
     // Custom method for handling movement input
     void MoveUp(float Value);
     void MoveRight(float Value);
+    void AddScore(int32 Value);
 
     // Called every frame
     virtual void Tick(float DeltaTime) override;
+
+    FVector GetPositionInFront(float Distance) const;
 
 protected:
     // Score property
